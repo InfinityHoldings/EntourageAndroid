@@ -2,6 +2,7 @@ package com.infinity.asynctask;
 
 import java.io.*;
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -105,15 +106,18 @@ public class JSONParser {
 
 			// Execute POST request to URL
 			HttpResponse response = httpClient.execute(request);
-			is = response.getEntity().getContent();
-
-			// Convert InputStream as String
-			if (is != null)
-				result = convertInputStreamToString(is);
-			else
-				result = "InputStream conversion failed!";
-			
-			Log.d("DEBUG2: ", result);
+			StatusLine stats = response.getStatusLine();
+			int statusCode = stats.getStatusCode();
+			if (statusCode == 200) {
+				is = response.getEntity().getContent();
+				// Convert InputStream as String
+				if (is != null)
+					result = convertInputStreamToString(is);
+				else
+					result = "InputStream conversion failed!";
+			} else {
+				Log.e("Failure: ", "Failed to login");
+			}
 		} catch (Exception e) {
 			Log.d("InputStream", e.getLocalizedMessage());
 		}

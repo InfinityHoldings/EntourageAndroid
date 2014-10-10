@@ -27,14 +27,12 @@
         android:id="@+id/btnSignIn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/signIn" />
+        android:text="@string/login" />
 
-  
-
-    <TextView
-        android:id="@+id/txtError"
+    <Button
+        android:id="@+id/btnSignUP"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="@string/register" />
 
 </LinearLayout>
