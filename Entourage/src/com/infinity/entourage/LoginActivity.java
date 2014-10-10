@@ -3,21 +3,25 @@ package com.infinity.entourage;
 import org.json.*;
 import com.infinity.asynctask.JSONParser;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.*;
 import controllers.EntourageUser;
 
 ;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements OnClickListener {
 	public final static String EXTRA_MESSAGE = "com.infinity.Entourage.MESSAGE";
-	JSONParser jsonparser = new JSONParser();
+	// Progress Dialog
+	private ProgressDialog pDialog;
+
 	EditText uname, pword;
-	Button btnSignIn;
+	Button btnSignIn, btnRegister;
 	EntourageUser eu;
 	JSONObject jobj = null;
 	String name = "";
@@ -31,21 +35,30 @@ public class LoginActivity extends Activity {
 		uname = (EditText) findViewById(R.id.editTextUserNameToLogin);
 		pword = (EditText) findViewById(R.id.editTextPasswordToLogin);
 		btnSignIn = (Button) findViewById(R.id.btnSignIn);
-		btnSignIn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				switch (view.getId()) {
-				case R.id.btnSignIn:
-					if (!validate()) {
-						Toast.makeText(getBaseContext(),
-								"Invalid Username/Password!", Toast.LENGTH_LONG)
-								.show();
-					} else {
-						new HttpAsyncTask().execute();
-					}
-				}
+		btnRegister = (Button) findViewById(R.id.btnSignUP);
+		btnSignIn.setOnClickListener(this);
+		btnRegister.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View view) {
+		// determine which button was pressed:
+		switch (view.getId()) {
+		case R.id.btnSignIn:
+			if (!validate()) {
+				Toast.makeText(getBaseContext(), "Invalid Username/Password!",
+						Toast.LENGTH_LONG).show();
+			} else {
+				new HttpAsyncTask().execute();
 			}
-		});
+			break;
+		case R.id.btnSignUP:
+			Intent i = new Intent(this, SignUpActivity.class);
+			startActivity(i);
+			break;
+		default:
+			break;
+		}
 	}
 
 	private boolean validate() {
@@ -59,7 +72,18 @@ public class LoginActivity extends Activity {
 
 	private class HttpAsyncTask extends AsyncTask<String, Void, String> {
 		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			// Showing progress dialog
+			pDialog = new ProgressDialog(LoginActivity.this);
+			pDialog.setMessage("Logging in...");
+			pDialog.setCancelable(false);
+			pDialog.show();
+		}
+
+		@Override
 		protected String doInBackground(String... params) {
+			JSONParser jsonparser = new JSONParser();
 			eu = new EntourageUser();
 			eu.setUserName(uname.getText().toString());
 			eu.setPassword(pword.getText().toString());
@@ -83,6 +107,10 @@ public class LoginActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			// Dismiss the progress dialog
+			if (pDialog.isShowing())
+				pDialog.dismiss();
 			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 			String message = uname.getText().toString();
 			intent.putExtra(EXTRA_MESSAGE, "Welcome " + message);

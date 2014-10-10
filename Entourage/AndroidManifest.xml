@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -17,8 +17,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.infinity.entourage.StartUpActivity"
-            android:label="@string/app_name" >
+            android:name="com.infinity.entourage.SplashScreenActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,12 +28,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.infinity.entourage.SignUpActivity"
-            android:label="Create Account" >
+            android:name="com.infinity.entourage.LoginActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.infinity.entourage.LoginActivity"
-            android:label="Login" >
+            android:name="com.infinity.entourage.SignUpActivity"
+            android:label="Create Account" >
         </activity>
         <activity
             android:name="com.infinity.entourage.MainActivity"

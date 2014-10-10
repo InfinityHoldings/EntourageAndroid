@@ -2,30 +2,26 @@
 <resources>
 
     <string name="app_name">Entourage</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <!-- Login View Strings -->
-
-    <string name="login_username"> Username </string>
-    <string name="login_password"> Password </string>
-    <string name="login"> Sign In </string>
-
-    <!-- Main View Strings -->
-
-    <string name="signIn"> Sign In</string>
-    <string name="signUp">Sign Up</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
     
     <!--  Main Activity  -->
-    
     <string name="main_activity_display_message">News Feed</string>
     
     <!-- Sign Up View Strings -->
+    <string name="userNameHint">Username</string>
+    <string name="passwordHint">Password</string>
+    <string name="confirmPasswordHint">Confirm Password</string>
+    <string name="btnCreateAccount">Create Account</string>
     
-    <string name="userNameHint"> Username</string>
-    <string name="passwordHint"> Password</string>
-    <string name="confirmPasswordHint"> Confirm Password</string>
-    <string name="btnCreateAccount"> Create Account</string>
+    <!--  SplashScreen -->
+    <color name="white">#FFFFFF</color>
+    <string name="splashTitle">©2014 Infinity Holdings LLC. All rights reserved.</string>
 
     <!-- User Page Strings -->
     <!--
@@ -34,23 +30,5 @@
     	that it feels more like an experience than a 'survey'? 
     	SHOULD THIS COMMENT BE EXTRACTED AND PLACED IN A DESIGN DOC?
     -->
-
-    <string name="username_label"> Username </string>
-    <string name="username"> Alias? </string>
-    <string name="first_name_label"> First Name</string>
-    <string name="first_name"> Enter First Name</string>
-    <string name="last_name_label"> Last Name</string>
-    <string name="last_name"> Enter Last Name</string>
-    <string name="birthday_label"> Birthday </string>
-    <string name="city"> Is this your city? </string>
-    <string name="upload_pic"> Upload cover photo </string>
-    <string name="mark"> Leave your mark</string>
-    <string name="email"> Enter Email </string>
-    <string name="email_label"> Email</string>
-    <string name="password"> Enter password</string>
-
-    <!-- Bones titles -->
-    <string name="login_title"> Login</string>
-    <string name="user_title"> User Bones </string>
 
 </resources>
