@@ -1,8 +1,9 @@
 .project
 .classpath
-.properties 
-.class
-.cache
+local.properties 
+*.class
+*.cache
 bin/
-Entourage/bin
-Entourage/gen
+gen/
+Entourage/bin/jarlist.cache
+
