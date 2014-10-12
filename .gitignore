@@ -3,6 +3,6 @@
 .properties 
 .class
 .cache
-/bin/
+bin/
 Entourage/bin
 Entourage/gen
