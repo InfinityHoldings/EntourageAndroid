@@ -89,7 +89,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			eu.setPassword(pword.getText().toString());
 			try {
 				jobj = jsonparser.HttpLoginTask(
-						"http://192.168.1.3:9000/login", eu);
+						"http://10.0.0.6:9000/login", eu);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

@@ -2,4 +2,7 @@
 .classpath
 .properties 
 .class
-/bin
+.cache
+/bin/
+Entourage/bin
+Entourage/gen
