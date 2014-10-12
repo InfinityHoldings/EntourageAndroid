@@ -1,7 +1,6 @@
 package com.infinity.asynctask;
 
 import org.json.JSONObject;
-
 import com.google.gson.Gson;
 
 public class HttpJSONParser extends HttpParser {
