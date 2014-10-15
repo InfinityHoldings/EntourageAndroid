@@ -12,6 +12,7 @@
         android:inputType="text"
         android:text="@string/main_activity_display_message" >
 
+
         <requestFocus />
     </EditText>
 </LinearLayout>
