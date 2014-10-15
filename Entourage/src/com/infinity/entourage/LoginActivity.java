@@ -1,6 +1,7 @@
 package com.infinity.entourage;
 
 import org.json.*;
+
 import com.infinity.asynctask.JSONParser;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -13,11 +14,8 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import controllers.EntourageUser;
 
-;
-
 public class LoginActivity extends Activity implements OnClickListener {
 	public final static String EXTRA_MESSAGE = "com.infinity.Entourage.MESSAGE";
-	// Progress Dialog
 	private ProgressDialog pDialog;
 
 	EditText uname, pword;
@@ -70,8 +68,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			return true;
 	}
 
-	private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-		@Override
+	private class HttpAsyncTask extends AsyncTask<String, Void, JSONObject> {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			// Showing progress dialog
@@ -81,40 +78,41 @@ public class LoginActivity extends Activity implements OnClickListener {
 			pDialog.show();
 		}
 
-		@Override
-		protected String doInBackground(String... params) {
+		protected JSONObject doInBackground(String... params) {
 			JSONParser jsonparser = new JSONParser();
 			eu = new EntourageUser();
 			eu.setUserName(uname.getText().toString());
 			eu.setPassword(pword.getText().toString());
 			try {
 				jobj = jsonparser.HttpLoginTask(
-						"http://10.0.0.6:9000/login", eu);
+						"http://192.168.1.3:9000/login", eu);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			// Check log for JSON response
 			Log.d("Login attempt", jobj.toString());
-			try {
-				name = jobj.getString("username");
-				password = jobj.getString("password");
-
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}// close doInBackground
+			return jobj;
+		}
 
 		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			// Dismiss the progress dialog
+		protected void onPostExecute(JSONObject json) {
+			super.onPostExecute(json);
 			if (pDialog.isShowing())
 				pDialog.dismiss();
-			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-			String message = uname.getText().toString();
-			intent.putExtra(EXTRA_MESSAGE, "Welcome " + message);
-			startActivity(intent);
+			try {
+				String success = jobj.getJSONObject("User").getString("status");
+				Log.d("Login response", success);
+
+				if (success.equals("1")) {
+					Intent intent = new Intent(LoginActivity.this,
+							MainActivity.class);
+					startActivity(intent);
+				} else
+					Toast.makeText(getBaseContext(), "Invalid Username/Password!",
+							Toast.LENGTH_LONG).show();
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 }
