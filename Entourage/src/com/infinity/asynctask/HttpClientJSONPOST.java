@@ -30,41 +30,25 @@ import controllers.EntourageUser;
 
 
 
-public class HttpClientPOST extends AsyncTask<String, Void, String> {
+public class HttpClientJSONPOST {
 	
+	String url; 
 	static InputStream is = null;
-	static JSONObject jsonObj = null;
-	static String json = "", result = "";
-	private HttpJSONParser parser; 
-	Class<?> myclass; 
+	JSONObject jsonObj = null;
+	String json = "", result = "";
+	private HttpJSONParser parser;  
 	Object classObject;
-	
-	
-
-	public static final int HTTP_TIMEOUT = 30 * 1000;
+	public static final int HTTP_TIMEOUT = 30 * 10000;
 	// Single instance of our DefaultHttpClient
 	private static DefaultHttpClient mHttpClient;
 	
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
+		public HttpClientJSONPOST(String url, JSONObject jsonObj){
+			this.url = url; 
+			this.jsonObj = jsonObj; 
+			
 		}
 
-		@Override
-		//params[0] url 
-		//params[1] jsonobject
-		//params[2] class type 
-		protected String doInBackground(String... params) {
-			
-			String url = params[0]; 
-			json = params[1]; 
-			try {
-				jsonObj = new JSONObject(json);
-			} catch (JSONException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} 
-			 
+		public String executePOST(){
 			
 			try {
 				// Create HttpClient
@@ -73,7 +57,8 @@ public class HttpClientPOST extends AsyncTask<String, Void, String> {
 				HttpPost request = new HttpPost(url);
 			
 				// Set JSON to StringEntity
-				StringEntity se = new StringEntity(json);
+				//StringEntity se = new StringEntity(json);
+				StringEntity se = new StringEntity(jsonObj.toString());
 				se.setContentEncoding("utf-8");
 				// set request Entity
 				request.setEntity(se);
@@ -85,39 +70,26 @@ public class HttpClientPOST extends AsyncTask<String, Void, String> {
 				HttpResponse response = httpClient.execute(request);
 				StatusLine stats = response.getStatusLine();
 				int statusCode = stats.getStatusCode();
-				if (statusCode == 200) {
+				Log.d("Http Status::", String.valueOf(statusCode)); 
+//				if (statusCode == 200) {
 					is = response.getEntity().getContent();
 					// Convert InputStream as String
 					if (is != null)
 						result = convertInputStreamToString(is);
 					else
 						result = "InputStream conversion failed!";
-				} else {
-					Log.e("Failure: ", "Failed to login");
-				}
+//				} else {
+//					Log.e("Failure: ", "Failed to login");
+//				}
 			} catch (Exception e) {
 				Log.d("InputStream", e.getLocalizedMessage());
 			}
-			try {
-				jsonObj = new JSONObject(result);
-			} catch (JSONException e) {
-				Log.e("JSON Parser", "Error parsing data " + e.toString());
-			}
 			
-			//return jsonObj;
+			return result;
 			
-//			//change this to an enum 
-//			if(params[2] == "JSON"){
-//				parser = new HttpJSONParser(); 
-//			}
-			
-			parser = new HttpJSONParser(); 
-			myclass = params[2].getClass(); 
-			classObject = parser.parse(jsonObj,  myclass); 
-			
-			return null;
-			
-		}// close doInBackground
+		}
+		
+		
 		
 		
 	
@@ -132,12 +104,6 @@ public class HttpClientPOST extends AsyncTask<String, Void, String> {
 			return result;
 		}
 		
-		
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			
-		}
 		
 		private static HttpClient getHttpClient() {
 			if (mHttpClient == null) {
