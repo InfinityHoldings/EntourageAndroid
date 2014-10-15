@@ -11,7 +11,7 @@
     <string name="register">Register</string>
     
     <!--  Main Activity  -->
-    <string name="main_activity_display_message">News Feed</string>
+    <string name="main_activity_display_message">Main Page</string>
     
     <!-- Sign Up View Strings -->
     <string name="userNameHint">Username</string>

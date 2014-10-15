@@ -14,13 +14,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		displayMessage = (EditText) findViewById(R.id.displayMsg);
-
-		// Get the message from the intent
-		Intent intent = getIntent();
-		String message = intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
-
-		// Display Message
-		displayMessage.setText(message);
+		displayMessage.setText("Main Page");
 	}
 
 	@Override
