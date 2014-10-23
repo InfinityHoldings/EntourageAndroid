@@ -21,7 +21,6 @@ public class SplashScreenActivity extends Activity {
 				Intent i = new Intent(SplashScreenActivity.this,
 						LoginActivity.class);
 				startActivity(i);
-
 				// close this activity
 				finish();
 			}

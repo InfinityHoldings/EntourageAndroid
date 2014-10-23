@@ -3,7 +3,7 @@
 local.properties 
 *.class
 *.cache
-bin/
+*/bin/
 gen/
 Entourage/bin/jarlist.cache
 
