@@ -2,7 +2,7 @@ package com.infinity.entourage;
 
 import org.json.*;
 
-import com.infinity.asynctask.JSONParser;
+import com.infinity.asynctask.HttpClientJSONPOST;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,7 +25,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 	String name = "";
 	String password = "";
 
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
@@ -38,7 +37,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		btnRegister.setOnClickListener(this);
 	}
 
-	@Override
 	public void onClick(View view) {
 		// determine which button was pressed:
 		switch (view.getId()) {
@@ -73,19 +71,19 @@ public class LoginActivity extends Activity implements OnClickListener {
 			super.onPreExecute();
 			// Showing progress dialog
 			pDialog = new ProgressDialog(LoginActivity.this);
-			pDialog.setMessage("Logging in...");
+			pDialog.setMessage("Please wait...");
 			pDialog.setCancelable(false);
 			pDialog.show();
 		}
 
 		protected JSONObject doInBackground(String... params) {
-			JSONParser jsonparser = new JSONParser();
+			HttpClientJSONPOST post = new HttpClientJSONPOST();
 			eu = new EntourageUser();
 			eu.setUserName(uname.getText().toString());
 			eu.setPassword(pword.getText().toString());
 			try {
-				jobj = jsonparser.HttpLoginTask(
-						"http://192.168.1.3:9000/login", eu);
+				jobj = post.HttpLoginTask(
+						"http://10.0.0.10:9000/rest/login", eu);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -100,6 +98,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			if (pDialog.isShowing())
 				pDialog.dismiss();
 			try {
+				//String success = jobj.getJSONObject("User").getString("status");
 				String success = jobj.getJSONObject("User").getString("status");
 				Log.d("Login response", success);
 
@@ -110,8 +109,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 				} else
 					Toast.makeText(getBaseContext(), "Invalid Username/Password!",
 							Toast.LENGTH_LONG).show();
-			} catch (JSONException e1) {
-				e1.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
 		}
 	}

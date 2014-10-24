@@ -1,7 +1,6 @@
 package com.infinity.entourage;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -17,7 +16,6 @@ public class MainActivity extends Activity {
 		displayMessage.setText("Main Page");
 	}
 
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
