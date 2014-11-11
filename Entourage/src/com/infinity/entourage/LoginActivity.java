@@ -77,6 +77,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 
 		protected JSONObject doInBackground(String... params) {
+			//CircularImageView = cv = new CircularImageView();
+			
 			HttpClientJSONPOST post = new HttpClientJSONPOST();
 			eu = new EntourageUser();
 			eu.setUserName(uname.getText().toString());

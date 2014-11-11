@@ -38,6 +38,7 @@ public class HttpClientJSONPOST {
 			HttpClient httpClient = getHttpClient();
 			// Make POST request to URL
 			HttpPost request = new HttpPost(url);
+
 			// Set JSON to StringEntity
 			StringEntity se = new StringEntity(jsonObj.toString());
 			se.setContentEncoding("utf-8");
@@ -63,6 +64,7 @@ public class HttpClientJSONPOST {
 			// }
 		} catch (Exception e) {
 			Log.d("InputStream", e.getLocalizedMessage());
+			Log.d("E R R O R: ", e.toString()); 
 		}
 		return result;
 	}

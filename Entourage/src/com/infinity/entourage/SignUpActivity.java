@@ -43,12 +43,12 @@ public class SignUpActivity extends Activity {
 						.toString();
 
 				// check if any of the fields are vacant
-				if (userName.equals("") || password.equals("")
-						|| confirmPassword.equals("")) {
-					Toast.makeText(getApplicationContext(), "Field Vaccant",
-							Toast.LENGTH_LONG).show();
-					return;
-				}
+//				if (userName.equals("") || password.equals("")
+//						|| confirmPassword.equals("")) {
+//					Toast.makeText(getApplicationContext(), "Field Vaccant",
+//							Toast.LENGTH_LONG).show();
+//					return;
+//				}
 				// check if both password matches
 				if (!password.equals(confirmPassword)) {
 					Toast.makeText(getApplicationContext(),
@@ -59,17 +59,23 @@ public class SignUpActivity extends Activity {
 
 					JSONObject jobj = new JSONObject();
 					try {
-						jobj.put("username", editTextUserName.getText()
-								.toString());
-						jobj.put("password", editTextPassword.getText()
-								.toString());
-						jobj.put("city", editTextCity.getText().toString());
-						jobj.put("state", editTextState.getText().toString());
-						jobj.put("email", editTextEmail.getText().toString());
+						
+//						jobj.put("userName", editTextUserName.getText().toString());
+//						jobj.put("password", editTextPassword.getText().toString()); 
+//						jobj.put("city", editTextCity.getText().toString() ); 
+//						jobj.put("state", editTextState.getText().toString()); 
+//						jobj.put("email", editTextEmail.getText().toString()); 
+						jobj.put("username", "keon");
+						jobj.put("password", "mypass"); 
+						jobj.put("city", "Atl" ); 
+						jobj.put("state", "GA"); 
+						jobj.put("email", "keon@infinity.com"); 
+						
+					
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					String url = "http://10.0.0.10:9000/rest/signup";
+					String url = "http://10.0.0.3:9000/rest/signUp";
 					Log.d("Url", "Connecting to : " + url);
 					Log.d("JSON", jobj.toString());
 					// send request
@@ -120,6 +126,8 @@ public class SignUpActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
+			
+			pDialog.dismiss(); 
 
 			// check status code
 			// if successful navigate to profile page
