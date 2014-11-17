@@ -11,7 +11,7 @@
     <string name="register">Register</string>
     
     <!--  Main Activity  -->
-    <string name="main_activity_display_message">News Feed</string>
+    <string name="main_activity_display_message">Main Page</string>
     
     <!-- Sign Up View Strings -->
     <string name="userNameHint">Username</string>
@@ -24,6 +24,15 @@
     <string name="splashTitle">©2014 Infinity Holdings LLC. All rights reserved.</string>
 
     <!-- User Page Strings -->
+    <string name="fullname"> First Name </string>
+    <string name="username"> User Name </string>
+    <string name="email"> Email </string>
+    <string name="city"> Your City </string>
+    <string name="state"> Your State</string>
+    <string name="password"> Password </string>
+    <string name="join"> Join </string>
+    <string name="profile"> Profile </string>
+    
     <!--
          How can we make these fields cooler? without them sounding like stats in a database? 
     	Should we ask questions instead of using typical labels? should we animate the process so 

@@ -1,7 +1,8 @@
 package com.infinity.entourage;
 
 import org.json.*;
-import com.infinity.asynctask.JSONParser;
+
+import com.infinity.asynctask.HttpClientJSONPOST;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,11 +14,8 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import controllers.EntourageUser;
 
-;
-
 public class LoginActivity extends Activity implements OnClickListener {
 	public final static String EXTRA_MESSAGE = "com.infinity.Entourage.MESSAGE";
-	// Progress Dialog
 	private ProgressDialog pDialog;
 
 	EditText uname, pword;
@@ -27,7 +25,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 	String name = "";
 	String password = "";
 
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
@@ -40,7 +37,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		btnRegister.setOnClickListener(this);
 	}
 
-	@Override
 	public void onClick(View view) {
 		// determine which button was pressed:
 		switch (view.getId()) {
@@ -70,51 +66,52 @@ public class LoginActivity extends Activity implements OnClickListener {
 			return true;
 	}
 
-	private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-		@Override
+	private class HttpAsyncTask extends AsyncTask<String, Void, JSONObject> {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			// Showing progress dialog
 			pDialog = new ProgressDialog(LoginActivity.this);
-			pDialog.setMessage("Logging in...");
+			pDialog.setMessage("Please wait...");
 			pDialog.setCancelable(false);
 			pDialog.show();
 		}
 
-		@Override
-		protected String doInBackground(String... params) {
-			JSONParser jsonparser = new JSONParser();
+		protected JSONObject doInBackground(String... params) {
+			HttpClientJSONPOST post = new HttpClientJSONPOST();
 			eu = new EntourageUser();
 			eu.setUserName(uname.getText().toString());
 			eu.setPassword(pword.getText().toString());
 			try {
-				jobj = jsonparser.HttpLoginTask(
-						"http://192.168.1.3:9000/login", eu);
+				jobj = post.HttpLoginTask(
+						"http://10.0.0.10:9000/rest/login", eu);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			// Check log for JSON response
 			Log.d("Login attempt", jobj.toString());
-			try {
-				name = jobj.getString("username");
-				password = jobj.getString("password");
+			return jobj;
+		}
 
+		@Override
+		protected void onPostExecute(JSONObject json) {
+			super.onPostExecute(json);
+			if (pDialog.isShowing())
+				pDialog.dismiss();
+			try {
+				//String success = jobj.getJSONObject("User").getString("status");
+				String success = jobj.getJSONObject("User").getString("status");
+				Log.d("Login response", success);
+
+				if (success.equals("1")) {
+					Intent intent = new Intent(LoginActivity.this,
+							MainActivity.class);
+					startActivity(intent);
+				} else
+					Toast.makeText(getBaseContext(), "Invalid Username/Password!",
+							Toast.LENGTH_LONG).show();
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			return null;
-		}// close doInBackground
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			// Dismiss the progress dialog
-			if (pDialog.isShowing())
-				pDialog.dismiss();
-			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-			String message = uname.getText().toString();
-			intent.putExtra(EXTRA_MESSAGE, "Welcome " + message);
-			startActivity(intent);
 		}
 	}
 }
