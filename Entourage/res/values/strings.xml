@@ -3,25 +3,27 @@
 
     <string name="app_name">Entourage</string>
     <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
 
     <!-- Login View Strings -->
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
-    
-    <!--  Main Activity  -->
+
+    <!-- Main Activity -->
     <string name="main_activity_display_message">Main Page</string>
-    
+
     <!-- Sign Up View Strings -->
     <string name="userNameHint">Username</string>
     <string name="passwordHint">Password</string>
     <string name="confirmPasswordHint">Confirm Password</string>
     <string name="btnCreateAccount">Create Account</string>
-    
-    <!--  SplashScreen -->
+
+    <!-- SplashScreen -->
     <color name="white">#FFFFFF</color>
-    <string name="splashTitle">©2014 Infinity Holdings LLC. All rights reserved.</string>
+
+    <string name="splashTitle">©2014 Vector Technology, LLC. All rights reserved.</string>
 
     <!-- User Page Strings -->
     <string name="fullname"> First Name </string>
@@ -32,12 +34,24 @@
     <string name="password"> Password </string>
     <string name="join"> Join </string>
     <string name="profile"> Profile </string>
-    
+
+    <!-- Image Upload -->
+    <string name="upload">Upload</string>
+    <string name="CaptionHint">Write Caption</string>
+    <string name="contentDescription">Image</string>
+
     <!--
          How can we make these fields cooler? without them sounding like stats in a database? 
     	Should we ask questions instead of using typical labels? should we animate the process so 
     	that it feels more like an experience than a 'survey'? 
     	SHOULD THIS COMMENT BE EXTRACTED AND PLACED IN A DESIGN DOC?
     -->
+    <string name="clear_cache_menu">Clear Caches</string>
+    <string name="clear_cache_complete_toast">Caches have been cleared</string>
+    <string name="imageview_description">Image Thumbnail</string>
+    <string name="no_network_connection_toast">No network connection found</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="empty_text">List is empty! Swipe down to refresh.</string>
+    <string name="filler_text">Filler text</string>
 
 </resources>

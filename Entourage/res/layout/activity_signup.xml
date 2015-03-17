@@ -13,30 +13,14 @@
 
         <requestFocus />
     </EditText>
-    
+
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/email"
-        android:inputType="text" />
-    
-    <EditText
-        android:id="@+id/editTextCity"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/city"
-        android:inputType="text" />
-    
-    <EditText
-        android:id="@+id/editTextState"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/state"
-        android:inputType="text" />
+        android:inputType='textEmailAddress' />
 
     <EditText
         android:id="@+id/editTextPassword"
