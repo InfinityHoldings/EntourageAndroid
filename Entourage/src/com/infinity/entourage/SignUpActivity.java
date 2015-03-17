@@ -8,6 +8,7 @@ import com.infinity.asynctask.HttpJSONParser;
 import com.infinity.entourage.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,22 +61,22 @@ public class SignUpActivity extends Activity {
 					JSONObject jobj = new JSONObject();
 					try {
 						
-//						jobj.put("userName", editTextUserName.getText().toString());
-//						jobj.put("password", editTextPassword.getText().toString()); 
-//						jobj.put("city", editTextCity.getText().toString() ); 
-//						jobj.put("state", editTextState.getText().toString()); 
-//						jobj.put("email", editTextEmail.getText().toString()); 
-						jobj.put("username", "keon");
-						jobj.put("password", "mypass"); 
-						jobj.put("city", "Atl" ); 
-						jobj.put("state", "GA"); 
-						jobj.put("email", "keon@infinity.com"); 
+						jobj.put("username", editTextUserName.getText().toString());
+						jobj.put("password", editTextPassword.getText().toString()); 
+						jobj.put("city", editTextCity.getText().toString() ); 
+						jobj.put("state", editTextState.getText().toString()); 
+						jobj.put("email", editTextEmail.getText().toString()); 
+//						jobj.put("username", "keon");
+//						jobj.put("password", "mypass"); 
+//						jobj.put("city", "Atl" ); 
+//						jobj.put("state", "GA"); 
+//						jobj.put("email", "keon@infinity.com"); 
 						
 					
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					String url = "http://10.0.0.3:9000/rest/signUp";
+					String url = "http://10.0.0.6:9000/rest/signUp";
 					Log.d("Url", "Connecting to : " + url);
 					Log.d("JSON", jobj.toString());
 					// send request
@@ -125,8 +126,9 @@ public class SignUpActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
+			 
 			super.onPostExecute(result);
-			
+			if (result == null | result == "") return;
 			pDialog.dismiss(); 
 
 			// check status code
@@ -136,6 +138,23 @@ public class SignUpActivity extends Activity {
 			// EntourageUser user = (EntourageUser) parser.parseToClass(jo,
 			// EntourageUser.class);
 			// editTextUserName.setText(user.getUserName());
+			
+			try {
+				JSONObject response = new JSONObject(result);
+				int success = response.getInt("success"); 
+				
+				if (success == 0){
+					Intent home = new Intent(getApplicationContext(), LoginActivity.class); 
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
+			
+			
+			//"Username is taken.. be more original! lol"
+			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show(); 
 		}
 
 	}

@@ -20,7 +20,7 @@ public class HttpClientJSONPOST {
 	JSONObject jsonObj = null;
 	String json = "", result = "", url = "";
 	private static InputStream is = null;
-	public static final int HTTP_TIMEOUT = 30 * 10000;
+	public static final int HTTP_TIMEOUT = 30 * 1000;
 	// Single instance of our DefaultHttpClient
 	private static DefaultHttpClient mHttpClient;
 
@@ -33,6 +33,7 @@ public class HttpClientJSONPOST {
 	}
 
 	public String executePOST() {
+		Log.d("C Y C L E Tracker", "HttpClientJSONPost executePOST()"); 
 		try {
 			// Create HttpClient
 			HttpClient httpClient = getHttpClient();
@@ -53,17 +54,23 @@ public class HttpClientJSONPOST {
 			int statusCode = stats.getStatusCode();
 			Log.d("Http Status::", String.valueOf(statusCode));
 			// if (statusCode == 200) {
+			
 			is = response.getEntity().getContent();
+			Log.d("is", is.toString()); 
 			// Convert InputStream as String
-			if (is != null)
+			if (is != null){
 				result = convertInputStreamToString(is);
-			else
+			}
+			else{
 				result = "InputStream conversion failed!";
+				Log.d("E R R O R: ","InputStream conversion failed");
+			}
+			 
 			// } else {
 			// Log.e("Failure: ", "Failed to login");
 			// }
 		} catch (Exception e) {
-			Log.d("InputStream", e.getLocalizedMessage());
+			//Log.d("InputStream", e.getLocalizedMessage());
 			Log.d("E R R O R: ", e.toString()); 
 		}
 		return result;
