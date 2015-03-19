@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+   
+    
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_name"
+        android:hint="Event Name"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentTop="true"
+        />
+    
+    <!-- the result from the spinner will be set as the text for this view. replace with autocomplete down the line -->
+    <EditText 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_type"
+        android:hint="Event Type"
+        android:layout_below="@id/event_name"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="30dp"
+       
+        />
+    
+    <Spinner
+        android:id="@+id/type_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/event_type"
+        android:layout_below="@id/event_name"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/event_type" 
+        />
+    
+    <Button 
+        android:id="@+id/selectDate"
+        android:text="D A Y "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/event_type"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/type_spinner" 
+        style="?android:attr/borderlessButtonStyle"/> 
+        
+        
+     <Button 
+        android:id="@+id/selectTime"
+        android:text="T I M E "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/selectDate"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/type_spinner"
+        style="?android:attr/borderlessButtonStyle" /> 
+        
+    
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_privacy"
+        android:text="P R I V A C Y "
+        android:layout_below="@id/selectDate"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignLeft="@id/event_name"
+        android:paddingLeft="10dp"
+        />
+    
+    <!--  when set to private invitations fragment should be added to frame (or button to launch it presented in ui) -->
+
+    <RadioGroup
+        android:id="@+id/event_privacy_radiogroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/event_privacy"
+        android:layout_below="@id/selectDate"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/event_privacy"
+        android:gravity="center"
+        android:orientation="horizontal" >
+         
+        <RadioButton
+            android:id="@+id/radioPublic"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Public"
+        	/> 
+        
+        <RadioButton
+            android:id="@+id/radioPrivate"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Private"
+        	/> 
+        </RadioGroup>
+        
+    <!-- 
+    <TextView />   label for location and horizonal rule etc -->
+        
+     <EditText
+         android:id="@+id/street_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Street"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/event_privacy"
+        
+        />
+     
+     <EditText
+         android:id="@+id/suite_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Suite"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/event_privacy"
+        android:layout_toRightOf="@id/street_address"
+        />
+     
+      <EditText
+         android:id="@+id/city_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="City"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/street_address"
+        
+        />
+    
+    
+     <EditText
+         android:id="@+id/state_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="State"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/street_address"
+        android:layout_toRightOf="@id/city_address"
+        android:layout_alignLeft="@id/suite_address"
+        />
+     
+    
+    
+    <Button 
+        android:id="@+id/create_button"
+        android:text="Create Event"
+        android:layout_below="@id/city_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        style="?android:attr/borderlessButtonStyle"
+        /> 
+    
+</RelativeLayout>
+
+ 
+    <!--  add 
+    hosts (show user pic and + sign; how do we represent this in the db?) , 
+    venue, 
+    event flyer (stock when unspecified), 
+    icons for date/time
+    -->

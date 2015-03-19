@@ -3,11 +3,11 @@
 local.properties 
 *.class
 *.cache
-
+<<<<<<< HEAD
 Entourage/bin/
-
+=======
 */bin/
-appcompat_v7/
+>>>>>>> FETCH_HEAD
 gen/
 Entourage/bin/jarlist.cache
 

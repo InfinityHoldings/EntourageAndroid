@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="event_types"> 
+        
+        <item> Kickback</item>
+        <item> Pregame</item>
+        <item> Party</item>
+        <item> Meet Up</item>  <!--  sub: meeting/hangout/discussion , etc -->
+        <item> Session </item> <!--  create subtypes: smoking session/jam session/skate session; gathering to enjoy a hobby together -->
+        
+        
+        </string-array>
+    
+</resources>

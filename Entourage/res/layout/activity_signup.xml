@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:i="http://schemas.android.com/apk/res/com.infinity.entourage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    
     android:gravity="center_vertical"
     android:orientation="vertical" >
+    
+    <com.infinity.views.CircularImageView 
+        android:id="@+id/profilePic"
+        android:layout_width="170dip"
+        android:layout_height="170dip"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dip"
+        i:hasShadow="true"
+        android:src="@drawable/owl3"/>
+    
 
     <EditText
         android:id="@+id/editTextUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/userNameHint" >
-
+        android:hint="@string/userNameHint" 
+        android:maxLines="1"
+        android:focusable="true"
+        android:inputType="text" >
+		
         <requestFocus />
     </EditText>
 
     <EditText
+        android:focusable="true"
         android:id="@+id/editTextEmail"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
