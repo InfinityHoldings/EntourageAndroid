@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
-
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.AbortMultipartUploadRequest;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -41,10 +40,10 @@ public class Uploader {
 
 	private SharedPreferences prefs;
 	private long partSize = MIN_DEFAULT_PART_SIZE;
-	private UploadProgressListener progressListener;
 	private long bytesUploaded = 0;
 	private boolean userInterrupted = false;
 	private boolean userAborted = false;
+	private UploadProgressListener progressListener;
 
 	public Uploader(Context context, AmazonS3Client amazonS3, String s3Bucket,
 			String s3key, File file) {
@@ -83,12 +82,11 @@ public class Uploader {
 			filePosition = (startPartNumber - 1) * partSize;
 			bytesUploaded = filePosition;
 
-			Log.i(TAG, "resuming at part " + startPartNumber + " position "
+			Log.i(TAG, "Resuming at part " + startPartNumber + " position "
 					+ filePosition);
-
 		} else {
 			// Initiate a new multi-part upload
-			Log.i(TAG, "initiating new upload");
+			Log.i(TAG, "Initiating new upload");
 
 			InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(
 					s3Bucket, s3key);
@@ -104,7 +102,7 @@ public class Uploader {
 			long thisPartSize = Math.min(partSize,
 					(contentLength - filePosition));
 
-			Log.i(TAG, "starting file part " + k + " with size " + thisPartSize);
+			Log.i(TAG, "Starting file part " + k + " with size " + thisPartSize);
 
 			UploadPartRequest uploadRequest = new UploadPartRequest()
 					.withBucketName(s3Bucket).withKey(s3key)
@@ -254,5 +252,4 @@ public class Uploader {
 		public void progressChanged(ProgressEvent progressEvent,
 				long bytesUploaded, int percentUploaded);
 	}
-
 }

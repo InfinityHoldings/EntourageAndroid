@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:i="http://schemas.android.com/apk/res/com.infinity.entourage"
+    xmlns:i="http://schemas.android.com/apk/lib/com.vector.entourage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="vertical" >
 
-
-    
-        <com.infinity.views.CircularImageView 
+    <views.CircularImageView
         android:id="@+id/profilePic"
         android:layout_width="170dip"
         android:layout_height="170dip"
         android:layout_gravity="center"
         android:layout_marginBottom="50dip"
-        i:hasShadow="true"
-        android:src="@drawable/owl3"/>
-        
+        android:src="@drawable/owl3" />
+       <!--  android:hasShadow="true"-->
+
     <EditText
         android:id="@+id/userFullName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/fullname"
-        android:inputType="text">
-        
+        android:inputType="text" >
+
         <requestFocus />
-        </EditText>
-    
+    </EditText>
+
     <EditText
         android:id="@+id/userName"
         android:layout_width="fill_parent"
@@ -35,7 +33,7 @@
         android:ems="10"
         android:hint="@string/username"
         android:inputType="text" />
-    
+
     <EditText
         android:id="@+id/userEmail"
         android:layout_width="fill_parent"
@@ -43,7 +41,7 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType="text" />
-    
+
     <EditText
         android:id="@+id/userCity"
         android:layout_width="fill_parent"
@@ -51,7 +49,7 @@
         android:ems="10"
         android:hint="@string/city"
         android:inputType="text" />
-    
+
     <EditText
         android:id="@+id/userState"
         android:layout_width="fill_parent"
@@ -59,7 +57,7 @@
         android:ems="10"
         android:hint="@string/state"
         android:inputType="text" />
-    
+
     <EditText
         android:id="@+id/editTextPasswordToLogin"
         android:layout_width="fill_parent"
@@ -72,16 +70,13 @@
         android:id="@+id/btnLogout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        style="?android:attr/borderlessButtonStyle"
-       	 />
+        android:text="Logout" />
+        <!-- style="?android:attr/borderlessButtonStyle"-->
 
     <Button
         android:id="@+id/btnUpdateUser"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Update"
-        style="?android:attr/borderlessButtonStyle"
-       	 />
-
+        android:text="Update" />
+<!--  style="?android:attr/borderlessButtonStyle" -->
 </LinearLayout>

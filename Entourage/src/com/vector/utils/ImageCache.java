@@ -119,7 +119,7 @@ public class ImageCache {
 			// If we're running on Honeycomb or newer, create a set of reusable
 			// bitmaps that can be populated into the inBitmap field of
 			// BitmapFactory.Options
-			if (Utils.hasHoneycomb()) {
+			if (ApiUtils.hasHoneycomb()) {
 				mReusableBitmaps = Collections
 						.synchronizedSet(new HashSet<SoftReference<Bitmap>>());
 			}
@@ -137,7 +137,7 @@ public class ImageCache {
 						((RecyclingBitmapDrawable) oldValue).setIsCached(false);
 					} else {
 						// The removed entry is a standard BitmapDrawable
-						if (Utils.hasHoneycomb()) {
+						if (ApiUtils.hasHoneycomb()) {
 							mReusableBitmaps.add(new SoftReference<Bitmap>(
 									oldValue.getBitmap()));
 						}
@@ -422,7 +422,7 @@ public class ImageCache {
 	@TargetApi(VERSION_CODES.KITKAT)
 	private static boolean canUseForInBitmap(Bitmap candidate,
 			BitmapFactory.Options targetOptions) {
-		if (!Utils.hasKitKat()) {
+		if (!ApiUtils.hasKitKat()) {
 			// On earlier versions, the dimensions must match exactly and the
 			// inSampleSize must be 1
 			return candidate.getWidth() == targetOptions.outWidth
@@ -496,10 +496,10 @@ public class ImageCache {
 	@TargetApi(VERSION_CODES.KITKAT)
 	public static int getBitmapSize(BitmapDrawable value) {
 		Bitmap bitmap = value.getBitmap();
-		if (Utils.hasKitKat()) {
+		if (ApiUtils.hasKitKat()) {
 			return bitmap.getAllocationByteCount();
 		}
-		if (Utils.hasHoneycombMR1()) {
+		if (ApiUtils.hasHoneycombMR1()) {
 			return bitmap.getByteCount();
 		}
 		return bitmap.getRowBytes() * bitmap.getHeight();
@@ -508,7 +508,7 @@ public class ImageCache {
 	// Check if external storage is built-in or removable.
 	@TargetApi(VERSION_CODES.GINGERBREAD)
 	public static boolean isExternalStorageRemovable() {
-		if (Utils.hasGingerbread()) {
+		if (ApiUtils.hasGingerbread()) {
 			return Environment.isExternalStorageRemovable();
 		}
 		return true;
@@ -517,7 +517,7 @@ public class ImageCache {
 	// Get the external app cache directory.
 	@TargetApi(VERSION_CODES.FROYO)
 	public static File getExternalCacheDir(Context context) {
-		if (Utils.hasFroyo()) {
+		if (ApiUtils.hasFroyo()) {
 			return context.getExternalCacheDir();
 		}
 		// Before Froyo we need to construct the external cache dir ourselves
@@ -532,7 +532,7 @@ public class ImageCache {
 	// Check how much usable space is available at a given path.
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 	public static long getUsableSpace(File path) {
-		if (Utils.hasGingerbread()) {
+		if (ApiUtils.hasGingerbread()) {
 			return path.getUsableSpace();
 		}
 		final StatFs stats = new StatFs(path.getPath());

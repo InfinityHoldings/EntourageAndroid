@@ -82,7 +82,7 @@ public class ImageResizer extends ImageWorker {
 				reqHeight);
 
 		// If we're running on Honeycomb or newer, try to use inBitmap
-		if (Utils.hasHoneycomb()) {
+		if (ApiUtils.hasHoneycomb()) {
 			addInBitmapOptions(options, cache);
 		}
 
@@ -106,7 +106,7 @@ public class ImageResizer extends ImageWorker {
 				reqHeight);
 
 		// If we're running on Honeycomb or newer, try to use inBitmap
-		if (Utils.hasHoneycomb()) {
+		if (ApiUtils.hasHoneycomb()) {
 			addInBitmapOptions(options, cache);
 		}
 
@@ -134,7 +134,7 @@ public class ImageResizer extends ImageWorker {
 		options.inJustDecodeBounds = false;
 
 		// If we're running on Honeycomb or newer, try to use inBitmap
-		if (Utils.hasHoneycomb()) {
+		if (ApiUtils.hasHoneycomb()) {
 			addInBitmapOptions(options, cache);
 		}
 		return BitmapFactory

@@ -34,12 +34,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
-
 import com.vector.entourage.BuildConfig;
 import com.vector.provider.Images;
 import com.vector.utils.ImageCache;
 import com.vector.utils.ImageFetcher;
-import com.vector.utils.Utils;
+import com.vector.utils.ApiUtils;
 
 @SuppressLint("InlinedApi")
 public class ImageDetailActivity extends FragmentActivity implements
@@ -55,7 +54,7 @@ public class ImageDetailActivity extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		if (BuildConfig.DEBUG) {
-			Utils.enableStrictMode();
+			ApiUtils.enableStrictMode();
 		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.image_detail_pager);
@@ -104,7 +103,7 @@ public class ImageDetailActivity extends FragmentActivity implements
 		// Enable some additional newer visibility and ActionBar features to
 		// create a more
 		// immersive photo viewing experience
-		if (Utils.hasHoneycomb()) {
+		if (ApiUtils.hasHoneycomb()) {
 			final ActionBar actionBar = getActionBar();
 
 			// Hide title text and set home as up

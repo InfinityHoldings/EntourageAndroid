@@ -26,7 +26,7 @@ import android.widget.ImageView;
 
 import com.vector.utils.ImageFetcher;
 import com.vector.utils.ImageWorker;
-import com.vector.utils.Utils;
+import com.vector.utils.ApiUtils;
 
 // This fragment will populate the children of the ViewPager from ImageDetailActivity.
 public class ImageDetailFragment extends Fragment {
@@ -81,7 +81,7 @@ public class ImageDetailFragment extends Fragment {
 
 		// Pass clicks on the ImageView to the parent activity to handle
 		if (OnClickListener.class.isInstance(getActivity())
-				&& Utils.hasHoneycomb()) {
+				&& ApiUtils.hasHoneycomb()) {
 			mImageView.setOnClickListener((OnClickListener) getActivity());
 		}
 	}

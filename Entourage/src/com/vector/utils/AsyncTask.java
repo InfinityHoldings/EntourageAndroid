@@ -65,7 +65,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 
 	// Executor that executes tasks one at a time in serial order. This
 	// serialization is global to a particular process.
-	public static final Executor SERIAL_EXECUTOR = Utils.hasHoneycomb() ? new SerialExecutor()
+	public static final Executor SERIAL_EXECUTOR = ApiUtils.hasHoneycomb() ? new SerialExecutor()
 			: Executors.newSingleThreadExecutor(sThreadFactory);
 
 	public static final Executor DUAL_THREAD_EXECUTOR = Executors

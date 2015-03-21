@@ -16,7 +16,7 @@ import com.vector.amazonaws.Uploader;
 import com.vector.amazonaws.Uploader.UploadProgressListener;
 import com.vector.asynctask.HttpClientJSONPOST;
 import com.vector.entourage.Constants;
-import com.vector.entourage.MainActivity;
+import com.vector.entourage.ImageUploadActivity;
 import com.vector.entourage.R;
 import com.vector.utils.CognitoUtil;
 
@@ -164,7 +164,7 @@ public class UploadService extends IntentService {
 		builder.setOngoing(true);
 		builder.setProgress(100, progress, false);
 
-		Intent notificationIntent = new Intent(this, MainActivity.class);
+		Intent notificationIntent = new Intent(this, ImageUploadActivity.class);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				notificationIntent, 0);

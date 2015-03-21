@@ -40,7 +40,6 @@ public class RecyclingImageView extends ImageView {
 	protected void onDetachedFromWindow() {
 		// This has been detached from Window, so clear the drawable
 		setImageDrawable(null);
-
 		super.onDetachedFromWindow();
 	}
 
@@ -48,13 +47,10 @@ public class RecyclingImageView extends ImageView {
 	public void setImageDrawable(Drawable drawable) {
 		// Keep hold of previous Drawable
 		final Drawable previousDrawable = getDrawable();
-
 		// Call super to set new Drawable
 		super.setImageDrawable(drawable);
-
 		// Notify new Drawable that it is being displayed
 		notifyDrawable(drawable, true);
-
 		// Notify old Drawable so it is no longer being displayed
 		notifyDrawable(previousDrawable, false);
 	}

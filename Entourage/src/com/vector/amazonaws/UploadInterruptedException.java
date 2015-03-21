@@ -19,5 +19,4 @@ public class UploadInterruptedException extends RuntimeException {
 	public UploadInterruptedException(Throwable cause) {
 		super(cause);
 	}
-	
 }

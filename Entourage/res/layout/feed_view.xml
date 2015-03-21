@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:i="http://schemas.android.com/apk/res/com.infinity.entourage"
+    xmlns:i="http://schemas.android.com/apk/res/com.vector.entourage"
     android:id="@+id/city_card"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <com.infinity.views.CircularImageView
+        <views.CircularImageView
             android:id="@+id/feedPic"
             android:layout_width="50dip"
             android:layout_height="50dip"

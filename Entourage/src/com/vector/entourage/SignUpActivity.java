@@ -5,13 +5,11 @@ import org.json.JSONObject;
 
 import com.vector.asynctask.HttpClientJSONPOST;
 import com.vector.asynctask.HttpJSONParser;
-
-import com.infinity.asynctask.HttpClientJSONPOST;
-import com.infinity.asynctask.HttpJSONParser;
-import com.infinity.entourage.R;
+import com.vector.entourage.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,44 +60,34 @@ public class SignUpActivity extends Activity {
 					return;
 				} else {
 					// Save the Data in Database
-					JSONObject jobj = new JSONObject();
 					try {
-						
-						jobj.put("username", editTextUserName.getText().toString());
-						jobj.put("password", editTextPassword.getText().toString()); 
-						jobj.put("city", editTextCity.getText().toString() ); 
-						jobj.put("state", editTextState.getText().toString()); 
-						jobj.put("email", editTextEmail.getText().toString()); 
-//						jobj.put("username", "keon");
-//						jobj.put("password", "mypass"); 
-//						jobj.put("city", "Atl" ); 
-//						jobj.put("state", "GA"); 
-//						jobj.put("email", "keon@infinity.com"); 
-						
-					
+
+						jobj.put("username", editTextUserName.getText()
+								.toString());
+						jobj.put("password", editTextPassword.getText()
+								.toString());
+						jobj.put("city", editTextCity.getText().toString());
+						jobj.put("state", editTextState.getText().toString());
+						jobj.put("email", editTextEmail.getText().toString());
+						// jobj.put("username", "keon");
+						// jobj.put("password", "mypass");
+						// jobj.put("city", "Atl" );
+						// jobj.put("state", "GA");
+						// jobj.put("email", "keon@infinity.com");
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					String url = "http://10.0.0.6:9000/rest/signUp";
-					Log.d("Url", "Connecting to : " + url);
 					Log.d("JSON", jobj.toString());
 					// send request
-					new HttpSignupTask().execute(url, jobj.toString());
+					new HttpSignupTask().execute(
+							"http://10.0.0.10:9000/rest/signUp",
+							jobj.toString());
 				}
 			}
 		});
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
-
 	private class HttpSignupTask extends AsyncTask<String, Void, String> {
-		String url;
-		String jsonStr;
-		JSONObject jsonObj;
-
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -110,28 +98,23 @@ public class SignUpActivity extends Activity {
 
 		@Override
 		protected String doInBackground(String... params) {
-			url = params[0];
-			Log.d("Async url param", url);
-
+			String jsonStr = null;
 			try {
-				jsonObj = new JSONObject(params[1]);
-				Log.d("JSON object passed to HttpClientPOST",
-						jsonObj.toString());
-				HttpClientJSONPOST post = new HttpClientJSONPOST(url, jsonObj);
+				jobj = new JSONObject(params[1]);
+				Log.d("JSON object passed to HttpClientPOST", jobj.toString());
+				HttpClientJSONPOST post = new HttpClientJSONPOST(params[0],
+						jobj);
 				jsonStr = post.HttpSignUpTask();
-				jsonStr = post.executePOST();
 				Log.d("HttpClientJSONPost response", jsonStr);
 				return jsonStr;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			return jsonStr;
-			return null;
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			 
 			super.onPostExecute(result);
 			if (pDialog.isShowing())
 				pDialog.dismiss();
@@ -139,8 +122,9 @@ public class SignUpActivity extends Activity {
 				jobj = new JSONObject(result);
 				String exists = jobj.getJSONObject("UserExist").getString(
 						"status");
-			if (result == null | result == "") return;
-			pDialog.dismiss(); 
+				if (result == null | result == "")
+					return;
+				pDialog.dismiss();
 
 				if (exists.equals("User Already Exist")) {
 					showAlert();
@@ -151,6 +135,8 @@ public class SignUpActivity extends Activity {
 							Toast.makeText(SignUpActivity.this,
 									"Account Created", Toast.LENGTH_SHORT)
 									.show();
+							startActivity(new Intent(SignUpActivity.this,
+									LoginActivity.class));
 						}
 					});
 			} catch (JSONException e) {
@@ -158,27 +144,6 @@ public class SignUpActivity extends Activity {
 			}
 		}
 
-			// JSONObject job = parser.parseToJSON(result);
-			// EntourageUser user = (EntourageUser) parser.parseToClass(jo,
-			// EntourageUser.class);
-			// editTextUserName.setText(user.getUserName());
-			
-			try {
-				JSONObject response = new JSONObject(result);
-				int success = response.getInt("success"); 
-				
-				if (success == 0){
-					Intent home = new Intent(getApplicationContext(), LoginActivity.class); 
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-			
-			
-			
-			//"Username is taken.. be more original! lol"
-			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show(); 
 		public void showAlert() {
 			SignUpActivity.this.runOnUiThread(new Runnable() {
 				@Override
@@ -201,6 +166,11 @@ public class SignUpActivity extends Activity {
 			});
 		}
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 
 }

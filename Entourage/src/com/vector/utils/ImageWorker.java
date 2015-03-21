@@ -218,7 +218,7 @@ public abstract class ImageWorker {
 			// If the bitmap was processed and the image cache is available,
 			// then add the processed bitmap to the cache for future use.
 			if (bitmap != null) {
-				if (Utils.hasHoneycomb()) {
+				if (ApiUtils.hasHoneycomb()) {
 					// Running on Honeycomb or newer, so wrap in a standard
 					// BitmapDrawable
 					drawable = new BitmapDrawable(mResources, bitmap);

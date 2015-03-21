@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,7 +62,7 @@ import com.vector.utils.ImageCache;
 import com.vector.utils.ImageFetcher;
 import com.vector.utils.SharedPreferencesCompat;
 import com.vector.utils.SharedPreferencesUtils;
-import com.vector.utils.Utils;
+import com.vector.utils.ApiUtils;
 import com.vector.widgets.PullToRefreshBase;
 import com.vector.widgets.PullToRefreshBase.State;
 import com.vector.widgets.PullToRefreshGridView;
@@ -81,27 +82,23 @@ public class ImageGridFragment extends Fragment implements
 		AdapterView.OnItemClickListener {
 	private static final String TAG = ImageGridFragment.class.getSimpleName();
 
-	private static final String IMAGE_CACHE_DIR = "thumbs";
+	private static final String IMAGE_CACHE_DIR = "_thumbs";
 
-	private static final String PREFS_NAME = "SCROLL";;
+	private static final String PREFS_NAME = "_scroll";;
 	private SharedPreferences prefs;
 	private int mImageThumbSize;
 	private int mImageThumbSpacing;
 	private ImageAdapter mAdapter;
 	private ImageFetcher mImageFetcher;
 	private PullToRefreshGridView mPullRefreshGridView;
+	private ProgressDialog pDialog;
 
 	ArrayList<String> LocationList;
 	private String content = null;
 	private boolean error = false;
-	View v = null;
-	// The GridView that displays the content that should be refreshed.
-
 	private GridView mGridView;
+	View v = null;
 
-	/**
-	 * Empty constructor as per the Fragment documentation
-	 */
 	public ImageGridFragment() {
 	}
 
@@ -109,7 +106,6 @@ public class ImageGridFragment extends Fragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-
 		mImageThumbSize = getResources().getDimensionPixelSize(
 				R.dimen.image_thumbnail_size);
 		mImageThumbSpacing = getResources().getDimensionPixelSize(
@@ -137,17 +133,12 @@ public class ImageGridFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
 		v = inflater.inflate(R.layout.image_grid_fragment, container, false);
 		// Retrieve the GridView
-
 		mPullRefreshGridView = (PullToRefreshGridView) v
 				.findViewById(R.id.pull_refresh_grid);
-
 		// Get refreshable view from PullToRefreshGridView class.
-
 		mGridView = mPullRefreshGridView.getRefreshableView();
-
 		mGridView.setAdapter(mAdapter);
 		mGridView.setOnItemClickListener(this);
 		mGridView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -158,7 +149,7 @@ public class ImageGridFragment extends Fragment implements
 				if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
 					// Before Honeycomb pause image loading on scroll to help
 					// with performance
-					if (!Utils.hasHoneycomb()) {
+					if (!ApiUtils.hasHoneycomb()) {
 						mImageFetcher.setPauseWork(true);
 					}
 				} else {
@@ -198,7 +189,7 @@ public class ImageGridFragment extends Fragment implements
 											"onCreateView - numColumns set to "
 													+ numColumns);
 								}
-								if (Utils.hasJellyBean()) {
+								if (ApiUtils.hasJellyBean()) {
 									mGridView.getViewTreeObserver()
 											.removeOnGlobalLayoutListener(this);
 								} else {
@@ -219,11 +210,10 @@ public class ImageGridFragment extends Fragment implements
 
 	private class GetDataTask extends AsyncTask<String, Void, String> {
 		protected void onPreExecute() {
+			super.onPreExecute();
 			// Showing progress dialog
-			// pDialog.setMessage("Getting your data... Please wait...");
-
-			// pDialog.show();}
-
+			pDialog = ProgressDialog.show(getActivity(), "Please wait...", "",
+					true);
 		}
 
 		@Override
@@ -233,7 +223,7 @@ public class ImageGridFragment extends Fragment implements
 			try {
 				content = httpGet.getJSONImageFromUrl(url[0]);
 			} catch (Exception e) {
-				// pDialog.dismiss();
+				pDialog.dismiss();
 				error = true;
 				e.printStackTrace();
 			}
@@ -241,7 +231,7 @@ public class ImageGridFragment extends Fragment implements
 		}
 
 		protected void onCancelled() {
-			// pDialog.dismiss();
+			pDialog.dismiss();
 			Toast toast = Toast.makeText(getActivity(),
 					"Error Connecting to Server", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.TOP, 25, 400);
@@ -249,7 +239,7 @@ public class ImageGridFragment extends Fragment implements
 		}
 
 		protected void onPostExecute(String content) {
-			// pDialog.dismiss();
+			pDialog.dismiss();
 			Toast toast;
 			if (error) {
 				toast = Toast.makeText(getActivity(), content,
@@ -312,7 +302,7 @@ public class ImageGridFragment extends Fragment implements
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		final Intent i = new Intent(getActivity(), ImageDetailActivity.class);
 		i.putExtra(ImageDetailActivity.EXTRA_IMAGE, (int) id);
-		if (Utils.hasJellyBean()) {
+		if (ApiUtils.hasJellyBean()) {
 			// makeThumbnailScaleUpAnimation() looks kind of ugly here as the
 			// loading spinner may
 			// show plus the thumbnail image in GridView is cropped. so using
@@ -376,7 +366,6 @@ public class ImageGridFragment extends Fragment implements
 			if (getNumColumns() == 0) {
 				return 0;
 			}
-
 			// Size + number of columns for top empty row
 			return LocationList.size() + mNumColumns;
 		}

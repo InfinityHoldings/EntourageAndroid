@@ -20,15 +20,15 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
-import com.vector.utils.Utils;
+import com.vector.utils.ApiUtils;
 
-// Simple FragmentActivity to hold the main ImageGridFragment and not much else.
+// Simple FragmentActivity to hold the main ImageGridFragment.
 public class ImageGridActivity extends FragmentActivity {
 	private static final String TAG = "ImageGridActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Utils.enableStrictMode();
+		ApiUtils.enableStrictMode();
 		super.onCreate(savedInstanceState);
 
 		if (getSupportFragmentManager().findFragmentByTag(TAG) == null) {

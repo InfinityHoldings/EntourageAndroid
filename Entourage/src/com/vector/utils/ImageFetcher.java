@@ -35,6 +35,7 @@ import java.net.URL;
 
 import com.vector.entourage.R;
 
+
 // A simple subclass of ImageResizer that fetches and resizes images fetched from a URL.
 public class ImageFetcher extends ImageResizer {
 	private static final String TAG = "ImageFetcher";

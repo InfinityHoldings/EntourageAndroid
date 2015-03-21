@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:i="http://schemas.android.com/apk/res/com.infinity.entourage"
+    xmlns:i="http://schemas.android.com/apk/res/com.vector.entourage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     
     android:gravity="center_vertical"
     android:orientation="vertical" >
     
-    <com.infinity.views.CircularImageView 
+    <views.CircularImageView 
         android:id="@+id/profilePic"
         android:layout_width="170dip"
         android:layout_height="170dip"
@@ -37,7 +37,25 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType='textEmailAddress' />
+    
+    <EditText
+        android:focusable="true"
+        android:id="@+id/editTextCity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/city"
+        android:inputType="text" />
 
+    <EditText
+        android:focusable="true"
+        android:id="@+id/editTextState"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/state"
+        android:inputType="text" />
+    
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="fill_parent"
