@@ -1,4 +1,4 @@
-package com.infinity.asynctask;
+package com.vector.async;
 
 public class HttpUrlConnectionGET {
 

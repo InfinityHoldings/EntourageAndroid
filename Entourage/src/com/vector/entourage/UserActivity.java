@@ -1,4 +1,4 @@
-package com.infinity.entourage;
+package com.vector.entourage;
 
 import controllers.EntourageUser;
 import android.app.Activity;

@@ -1,11 +1,13 @@
-package com.infinity.entourage;
+package com.vector.entourage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.infinity.asynctask.HttpClientJSONPOST;
-import com.infinity.asynctask.HttpJSONParser;
-import com.infinity.entourage.R;
+import com.vector.entourage.R;
+
+import com.vector.async.HttpClientJSONPOST;
+import com.vector.async.HttpJSONParser;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;

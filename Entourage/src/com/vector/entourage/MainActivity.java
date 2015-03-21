@@ -1,4 +1,8 @@
-package com.infinity.entourage;
+package com.vector.entourage;
+
+
+
+import com.vector.entourage.R;
 
 import android.app.Activity;
 import android.os.Bundle;

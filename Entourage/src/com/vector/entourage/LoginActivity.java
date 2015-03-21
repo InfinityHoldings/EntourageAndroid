@@ -1,8 +1,10 @@
-package com.infinity.entourage;
+package com.vector.entourage;
 
 import org.json.*;
 
-import com.infinity.asynctask.HttpClientJSONPOST;
+import com.vector.entourage.R;
+import com.vector.async.HttpClientJSONPOST;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,7 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
-import controllers.EntourageUser;
+//Must create pojo instead of importing jar; we need client side models, cant use a static dependency
+//import controllers.EntourageUser;
+
 
 public class LoginActivity extends Activity implements OnClickListener {
 	public final static String EXTRA_MESSAGE = "com.infinity.Entourage.MESSAGE";
@@ -20,7 +24,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	EditText uname, pword;
 	Button btnSignIn, btnRegister;
-	EntourageUser eu;
+	//EntourageUser eu;
 	JSONObject jobj = null;
 	String name = "";
 	String password = "";
@@ -78,15 +82,15 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		protected JSONObject doInBackground(String... params) {
 			HttpClientJSONPOST post = new HttpClientJSONPOST();
-			eu = new EntourageUser();
-			eu.setUserName(uname.getText().toString());
-			eu.setPassword(pword.getText().toString());
-			try {
-				jobj = post.HttpLoginTask(
-						"http://10.0.0.10:9000/rest/login", eu);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+//			eu = new EntourageUser();
+//			eu.setUserName(uname.getText().toString());
+//			eu.setPassword(pword.getText().toString());
+//			try {
+//				jobj = post.HttpLoginTask(
+//						"http://10.0.0.10:9000/rest/login", eu);
+//			} catch (Exception e1) {
+//				e1.printStackTrace();
+//			}
 			// Check log for JSON response
 			Log.d("Login attempt", jobj.toString());
 			return jobj;
