@@ -3,11 +3,12 @@
     xmlns:i="http://schemas.android.com/apk/res/com.vector.entourage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    
     android:gravity="center_vertical"
     android:orientation="vertical" >
+
+
     
-    <com.vector.views.CircularImageView 
+        <com.vector.views.CircularImageView 
         android:id="@+id/profilePic"
         android:layout_width="170dip"
         android:layout_height="170dip"
@@ -15,23 +16,28 @@
         android:layout_marginBottom="50dip"
         i:hasShadow="true"
         android:src="@drawable/owl3"/>
-    
-
+        
     <EditText
-        android:id="@+id/editTextUserName"
-        android:layout_width="match_parent"
+        android:id="@+id/userFullName"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/userNameHint" 
-        android:maxLines="1"
-        android:focusable="true"
-        android:inputType="text" >
-		
+        android:ems="10"
+        android:hint="@string/fullname"
+        android:inputType="text">
+        
         <requestFocus />
-    </EditText>
+        </EditText>
     
     <EditText
-        android:focusable="true"
-        android:id="@+id/editTextEmail"
+        android:id="@+id/userName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/username"
+        android:inputType="text" />
+    
+    <EditText
+        android:id="@+id/userEmail"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -39,7 +45,7 @@
         android:inputType="text" />
     
     <EditText
-        android:id="@+id/editTextCity"
+        android:id="@+id/userCity"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -47,32 +53,35 @@
         android:inputType="text" />
     
     <EditText
-        android:id="@+id/editTextState"
+        android:id="@+id/userState"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/state"
         android:inputType="text" />
-
+    
     <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/editTextPasswordToLogin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/passwordHint"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/editTextConfirmPassword"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/confirmPasswordHint"
+        android:ems="10"
+        android:hint="@string/login_password"
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/buttonCreateAccount"
+        android:id="@+id/btnLogout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:text="@string/btnCreateAccount" />
+        android:text="Logout"
+        style="?android:attr/borderlessButtonStyle"
+       	 />
+
+    <Button
+        android:id="@+id/btnUpdateUser"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        style="?android:attr/borderlessButtonStyle"
+       	 />
 
 </LinearLayout>

@@ -5,7 +5,9 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="7"
+
+        android:minSdkVersion="11"
+
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,17 +24,18 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
         </activity>
         <activity
             android:name="com.vector.entourage.LoginActivity"          
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.vector.entourage.SignUpActivity"      
@@ -45,6 +48,31 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/main_activity_display_message"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.infinity.entourage.EntourageMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" 
+            android:theme="@style/FeedTheme">
+            
+        </activity>
+        <activity
+            android:name="com.infinity.entourage.EventActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" 
+            android:theme="@style/ToolTheme">
+        </activity>
+        <activity
+            android:name="com.infinity.entourage.EntourageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" 
+            android:theme="@style/FeedTheme">
+        </activity>
+        <activity
+            android:name="com.infinity.entourage.UserActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" 
+            android:theme="@style/FeedTheme">
         </activity>
     </application>
 
