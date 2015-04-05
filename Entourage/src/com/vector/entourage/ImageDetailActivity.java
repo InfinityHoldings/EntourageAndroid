@@ -16,10 +16,10 @@
 
 package com.vector.entourage;
 
-import android.annotation.SuppressLint;
+import java.util.ArrayList;
+
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -34,23 +34,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
+
 import com.vector.entourage.BuildConfig;
-import com.vector.provider.Images;
 import com.vector.utils.ImageCache;
 import com.vector.utils.ImageFetcher;
 import com.vector.utils.ApiUtils;
 
-@SuppressLint("InlinedApi")
 public class ImageDetailActivity extends FragmentActivity implements
 		OnClickListener {
 	private static final String IMAGE_CACHE_DIR = "images";
 	public static final String EXTRA_IMAGE = "extra_image";
+	public static final String IMAGE_LIST = "Image_list";
 
 	private ImagePagerAdapter mAdapter;
 	private ImageFetcher mImageFetcher;
 	private ViewPager mPager;
+	ArrayList<String> _imageList;
 
-	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	@TargetApi(VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		if (BuildConfig.DEBUG) {
@@ -66,15 +67,16 @@ public class ImageDetailActivity extends FragmentActivity implements
 		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 		final int height = displayMetrics.heightPixels;
 		final int width = displayMetrics.widthPixels;
-
+		_imageList = getIntent().getStringArrayListExtra("Image_list");
 		// For this sample we'll use half of the longest width to resize our
-		// images. As the image scaling ensures the image is larger than this,
-		// we should be
-		// left with a resolution that is appropriate for both portrait and
-		// landscape. For
-		// best image quality we shouldn't divide by 2, but this will use more
-		// memory and require a
-		// larger memory cache.
+		// images. As the
+		// image scaling ensures the image is larger than this, we should be
+		// left with a
+		// resolution that is appropriate for both portrait and landscape. For
+		// best image quality
+		// we shouldn't divide by 2, but this will use more memory and require a
+		// larger memory
+		// cache.
 		final int longest = (height > width ? height : width) / 2;
 
 		ImageCache.ImageCacheParams cacheParams = new ImageCache.ImageCacheParams(
@@ -90,7 +92,7 @@ public class ImageDetailActivity extends FragmentActivity implements
 
 		// Set up ViewPager and backing adapter
 		mAdapter = new ImagePagerAdapter(getSupportFragmentManager(),
-				Images.imageUrls.length);
+				_imageList.size());
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 		mPager.setPageMargin((int) getResources().getDimension(
@@ -99,33 +101,6 @@ public class ImageDetailActivity extends FragmentActivity implements
 
 		// Set up activity to go full screen
 		getWindow().addFlags(LayoutParams.FLAG_FULLSCREEN);
-
-		// Enable some additional newer visibility and ActionBar features to
-		// create a more
-		// immersive photo viewing experience
-		if (ApiUtils.hasHoneycomb()) {
-			final ActionBar actionBar = getActionBar();
-
-			// Hide title text and set home as up
-			actionBar.setDisplayShowTitleEnabled(false);
-			actionBar.setDisplayHomeAsUpEnabled(true);
-
-			// Hide and show the ActionBar as the visibility changes
-			mPager.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-				@Override
-				public void onSystemUiVisibilityChange(int vis) {
-					if ((vis & View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0) {
-						actionBar.hide();
-					} else {
-						actionBar.show();
-					}
-				}
-			});
-
-			// Start low profile mode and hide ActionBar
-			mPager.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
-			actionBar.hide();
-		}
 
 		// Set the current item based on the extra passed in to this activity
 		final int extraCurrentItem = getIntent().getIntExtra(EXTRA_IMAGE, -1);
@@ -174,17 +149,20 @@ public class ImageDetailActivity extends FragmentActivity implements
 		return true;
 	}
 
-	// Called by the ViewPager child fragments to load images via the one
-	// ImageFetcher
+	/**
+	 * Called by the ViewPager child fragments to load images via the one
+	 * ImageFetcher
+	 */
 	public ImageFetcher getImageFetcher() {
 		return mImageFetcher;
 	}
 
-	// The main adapter that backs the ViewPager. A subclass of
-	// FragmentStatePagerAdapter as there
-	// could be a large number of items in the ViewPager and we don't want to
-	// retain them all in
-	// memory at once but create/destroy them on the fly.
+	/**
+	 * The main adapter that backs the ViewPager. A subclass of
+	 * FragmentStatePagerAdapter as there could be a large number of items in
+	 * the ViewPager and we don't want to retain them all in memory at once but
+	 * create/destroy them on the fly.
+	 */
 	private class ImagePagerAdapter extends FragmentStatePagerAdapter {
 		private final int mSize;
 
@@ -200,14 +178,15 @@ public class ImageDetailActivity extends FragmentActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			return ImageDetailFragment.newInstance(Images.imageUrls[position]);
+			return ImageDetailFragment.newInstance(_imageList.get(position));
 		}
 	}
 
-	// Set on the ImageView in the ViewPager children fragments, to
-	// enable/disable low profile mode
-	// when the ImageView is touched.
-	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	/**
+	 * Set on the ImageView in the ViewPager children fragments, to
+	 * enable/disable low profile mode when the ImageView is touched.
+	 */
+	@TargetApi(VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onClick(View v) {
 		final int vis = mPager.getSystemUiVisibility();

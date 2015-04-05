@@ -16,13 +16,14 @@ public class ApiUtils {
 
 	@TargetApi(VERSION_CODES.HONEYCOMB)
 	public static void enableStrictMode() {
-		if (ApiUtils.hasGingerbread()) {
-			StrictMode.ThreadPolicy.Builder threadPolicyBuilder = new StrictMode.ThreadPolicy.Builder().permitAll().penaltyLog();
+		if (Utils.hasGingerbread()) {
+			StrictMode.ThreadPolicy.Builder threadPolicyBuilder = new StrictMode.ThreadPolicy.Builder()
+					.detectAll().penaltyLog();
 			StrictMode.VmPolicy.Builder vmPolicyBuilder = new StrictMode.VmPolicy.Builder()
 					.detectAll().penaltyLog();
 
-			if (ApiUtils.hasHoneycomb()) {
-				threadPolicyBuilder.penaltyDialog();
+			if (Utils.hasHoneycomb()) {
+				threadPolicyBuilder.penaltyFlashScreen();
 				vmPolicyBuilder.setClassInstanceLimit(ImageGridActivity.class,
 						1).setClassInstanceLimit(ImageDetailActivity.class, 1);
 			}
@@ -33,7 +34,7 @@ public class ApiUtils {
 
 	public static boolean hasFroyo() {
 		// Can use static final constants like FROYO, declared in later versions
-		// of the OS since they are inclined at compile time. This is guaranteed
+		// of the OS since they are inlined at compile time. This is guaranteed
 		// behavior.
 		return Build.VERSION.SDK_INT >= VERSION_CODES.FROYO;
 	}

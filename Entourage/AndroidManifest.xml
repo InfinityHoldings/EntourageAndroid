@@ -21,8 +21,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="21" />
+        android:minSdkVersion="16"
+        android:targetSdkVersion="22" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -56,11 +56,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.vector.entourage.SignUpActivity"
@@ -76,47 +71,45 @@
         </activity>
         <activity
             android:name="com.vector.entourage.ImageGridActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.vector.entourage.ImageDetailActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppThemeDark.FullScreen" >
+            android:parentActivityName="com.vector.entourage.ImageGridActivity"
+            android:theme="@style/AppThemeDark.FullScreen"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vector.entourage.ImageGridActivity" />
         </activity>
-        <activity
-            android:name="com.vector.entourage.ImageGridFragment_bkup"
-            android:label="@string/app_name" >
-        </activity>
-
         <service
             android:name="com.vector.service.UploadService"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="com.vector.entourage.EntourageMainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" 
-            android:theme="@style/FeedTheme">
-            
+            android:screenOrientation="portrait"
+            android:theme="@style/FeedTheme" >
         </activity>
         <activity
             android:name="com.vector.entourage.EventActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.vector.entourage.EntourageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" 
-            android:theme="@style/FeedTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/FeedTheme" >
         </activity>
         <activity
             android:name="com.vector.entourage.UserActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" 
-            android:theme="@style/FeedTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/FeedTheme" >
         </activity>
     </application>
 

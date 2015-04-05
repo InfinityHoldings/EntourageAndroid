@@ -17,21 +17,20 @@
 package com.vector.entourage;
 
 import java.util.ArrayList;
-
+import models.S3Amazon;
+import org.json.JSONArray;
+import org.json.JSONException;
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.os.Build.VERSION_CODES;
 import android.os.AsyncTask;
-import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.TypedValue;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,32 +42,17 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amazonaws.util.json.JSONArray;
-import com.amazonaws.util.json.JSONException;
 import com.google.gson.Gson;
-import com.vector.widgets.SoundPullEventListener;
 import com.vector.asynctask.HttpClientJSONGET;
-import com.vector.network.NetworkUtils;
-import com.vector.provider.Images;
 import com.vector.utils.ImageCache;
 import com.vector.utils.ImageFetcher;
-import com.vector.utils.SharedPreferencesCompat;
-import com.vector.utils.SharedPreferencesUtils;
 import com.vector.utils.ApiUtils;
-import com.vector.widgets.PullToRefreshBase;
-import com.vector.widgets.PullToRefreshBase.State;
 import com.vector.widgets.PullToRefreshGridView;
-import com.vector.widgets.PullToRefreshBase.OnRefreshListener2;
-
-import models.S3Amazon;
 
 /**
  * The main fragment that powers the ImageGridActivity screen. Fairly straight
@@ -81,11 +65,7 @@ import models.S3Amazon;
 public class ImageGridFragment extends Fragment implements
 		AdapterView.OnItemClickListener {
 	private static final String TAG = ImageGridFragment.class.getSimpleName();
-
-	private static final String IMAGE_CACHE_DIR = "_thumbs";
-
-	private static final String PREFS_NAME = "_scroll";;
-	private SharedPreferences prefs;
+	private static final String IMAGE_CACHE_DIR = "thumbs";
 	private int mImageThumbSize;
 	private int mImageThumbSpacing;
 	private ImageAdapter mAdapter;
@@ -93,11 +73,12 @@ public class ImageGridFragment extends Fragment implements
 	private PullToRefreshGridView mPullRefreshGridView;
 	private ProgressDialog pDialog;
 
-	ArrayList<String> LocationList;
-	private String content = null;
+	ArrayList<String> imageList;
+	private String result = null;
 	private boolean error = false;
-	private GridView mGridView;
-	View v = null;
+	GridView mGridView;
+	View v;
+	String url = "http://192.168.1.11:9000/rest/downloadImages";
 
 	public ImageGridFragment() {
 	}
@@ -110,13 +91,9 @@ public class ImageGridFragment extends Fragment implements
 				R.dimen.image_thumbnail_size);
 		mImageThumbSpacing = getResources().getDimensionPixelSize(
 				R.dimen.image_thumbnail_spacing);
-		LocationList = new ArrayList<String>();
-		grabURL("http://10.0.0.10:9000/rest/getImages");
-		mAdapter = new ImageAdapter(getActivity());
 
 		ImageCache.ImageCacheParams cacheParams = new ImageCache.ImageCacheParams(
 				getActivity(), IMAGE_CACHE_DIR);
-
 		cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of
 													// app memory
 
@@ -126,8 +103,6 @@ public class ImageGridFragment extends Fragment implements
 		mImageFetcher.setLoadingImage(R.drawable.empty_photo);
 		mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(),
 				cacheParams);
-		prefs = getActivity().getApplicationContext().getSharedPreferences(
-				PREFS_NAME, Context.MODE_PRIVATE);
 	}
 
 	@Override
@@ -139,6 +114,11 @@ public class ImageGridFragment extends Fragment implements
 				.findViewById(R.id.pull_refresh_grid);
 		// Get refreshable view from PullToRefreshGridView class.
 		mGridView = mPullRefreshGridView.getRefreshableView();
+
+		imageList = new ArrayList<String>();
+		mAdapter = new ImageAdapter(getActivity());
+
+		// create an ArrayAdaptar from the String Array
 		mGridView.setAdapter(mAdapter);
 		mGridView.setOnItemClickListener(this);
 		mGridView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -160,6 +140,10 @@ public class ImageGridFragment extends Fragment implements
 			@Override
 			public void onScroll(AbsListView absListView, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
+				/*
+				 * int lastInScreen = firstVisibleItem + visibleItemCount; if
+				 * ((lastInScreen == totalItemCount)) { getImageUrl(url); }
+				 */
 			}
 		});
 
@@ -172,6 +156,7 @@ public class ImageGridFragment extends Fragment implements
 		// of each view so we get nice square thumbnails.
 		mGridView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
+					@SuppressWarnings("deprecation")
 					@TargetApi(VERSION_CODES.JELLY_BEAN)
 					@Override
 					public void onGlobalLayout() {
@@ -200,34 +185,32 @@ public class ImageGridFragment extends Fragment implements
 						}
 					}
 				});
+		getImageUrl(url);
 		return v;
 	}
 
-	public void grabURL(String url) {
-		Log.v("Android Spinner JSON Data Activity", url);
-		new GetDataTask().execute(url);
+	public void getImageUrl(String url) {
+		Log.v("ImageGridFragment : getImages() ", url);
+		new downloadImageTask().execute(url);
 	}
 
-	private class GetDataTask extends AsyncTask<String, Void, String> {
+	private class downloadImageTask extends AsyncTask<String, Void, String> {
 		protected void onPreExecute() {
-			super.onPreExecute();
-			// Showing progress dialog
+			super.onPreExecute(); // Showing progress
 			pDialog = ProgressDialog.show(getActivity(), "Please wait...", "",
 					true);
 		}
 
-		@Override
 		protected String doInBackground(String... url) {
-			// loadingMore = true;
 			HttpClientJSONGET httpGet = new HttpClientJSONGET();
 			try {
-				content = httpGet.getJSONImageFromUrl(url[0]);
+				result = httpGet.getJSONImageFromUrl(url[0]);
 			} catch (Exception e) {
 				pDialog.dismiss();
 				error = true;
 				e.printStackTrace();
 			}
-			return content;
+			return result;
 		}
 
 		protected void onCancelled() {
@@ -238,17 +221,17 @@ public class ImageGridFragment extends Fragment implements
 			toast.show();
 		}
 
-		protected void onPostExecute(String content) {
+		protected void onPostExecute(String result) {
 			pDialog.dismiss();
 			Toast toast;
 			if (error) {
-				toast = Toast.makeText(getActivity(), content,
-						Toast.LENGTH_LONG);
+				toast = Toast
+						.makeText(getActivity(), result, Toast.LENGTH_LONG);
 				toast.setGravity(Gravity.TOP, 25, 400);
 				toast.show();
 			} else {
 				try {
-					displayImageList(content);
+					displayImageList(result);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -257,22 +240,24 @@ public class ImageGridFragment extends Fragment implements
 	}
 
 	private void displayImageList(String response) throws JSONException {
-		JSONArray locationArray = new JSONArray(response);
-		Gson gson = new Gson();
-		if (locationArray.length() == 0) {
-			mGridView = (GridView) v.findViewById(R.id.pull_refresh_grid);
-			// mGridView.removeView(loadMoreView);
-		} else {
-			for (int i = 0; i < locationArray.length(); i++) {
-				String locationInfo = locationArray.get(i).toString();
-				// create java object from the JSON object
-				S3Amazon amazon = gson.fromJson(locationInfo, S3Amazon.class);
-				// add to image array list
-				LocationList.add(amazon.location.toString());
-				// mAdapter.add(amazon.location);
+		JSONArray imageArr = new JSONArray(response);
+		try {
+			Gson gson = new Gson();
+			if (imageArr.length() == 0) {
+				mGridView = (GridView) v.findViewById(R.id.pull_refresh_grid);
+			} else {
+				for (int i = 0; i < imageArr.length(); i++) {
+					// get the image information JSON Array
+					String imageInfo = imageArr.get(i).toString();
+					// create java object from the JSON object
+					S3Amazon amazon = gson.fromJson(imageInfo, S3Amazon.class);
+					// add to image array list
+					imageList.add(amazon.location.toString());
+				}
+				mAdapter.notifyDataSetChanged();
 			}
-			mAdapter.notifyDataSetChanged();
-			// loadingMore = false;
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -302,6 +287,7 @@ public class ImageGridFragment extends Fragment implements
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		final Intent i = new Intent(getActivity(), ImageDetailActivity.class);
 		i.putExtra(ImageDetailActivity.EXTRA_IMAGE, (int) id);
+		i.putStringArrayListExtra("Image_list", imageList);
 		if (ApiUtils.hasJellyBean()) {
 			// makeThumbnailScaleUpAnimation() looks kind of ugly here as the
 			// loading spinner may
@@ -338,7 +324,7 @@ public class ImageGridFragment extends Fragment implements
 	 * empty views as we use a transparent ActionBar and don't want the real top
 	 * row of images to start off covered by it.
 	 */
-	private class ImageAdapter extends BaseAdapter {
+	public class ImageAdapter extends BaseAdapter {
 
 		private final Context mContext;
 		private int mItemHeight = 0;
@@ -360,19 +346,24 @@ public class ImageGridFragment extends Fragment implements
 			}
 		}
 
+		public int getArrayCount() {
+			return imageList.size();
+		}
+
 		@Override
 		public int getCount() {
 			// If columns have yet to be determined, return no items
 			if (getNumColumns() == 0) {
 				return 0;
 			}
+
 			// Size + number of columns for top empty row
-			return LocationList.size() + mNumColumns;
+			return imageList.size() + mNumColumns;
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return position < mNumColumns ? null : LocationList.get(position
+			return position < mNumColumns ? null : imageList.get(position
 					- mNumColumns);
 		}
 
@@ -430,7 +421,7 @@ public class ImageGridFragment extends Fragment implements
 			// Finally load the image asynchronously into the ImageView, this
 			// also takes care of
 			// setting a placeholder image while the background thread runs
-			mImageFetcher.loadImage(LocationList.get(position - mNumColumns),
+			mImageFetcher.loadImage(imageList.get(position - mNumColumns),
 					imageView);
 			return imageView;
 		}

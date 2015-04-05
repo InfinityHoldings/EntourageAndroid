@@ -18,8 +18,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:paddingTop="?android:attr/actionBarSize" >
+    android:orientation="vertical" >
 
     <com.vector.widgets.PullToRefreshGridView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
@@ -28,12 +27,13 @@
         android:layout_height="match_parent"
         android:columnWidth="@dimen/image_thumbnail_size"
         android:fadingEdgeLength="5dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:gravity="fill"
         android:horizontalSpacing="@dimen/image_thumbnail_spacing"
         android:numColumns="auto_fit"
         android:requiresFadingEdge="vertical"
         android:smoothScrollbar="true"
-        android:stretchMode="columnWidth"
         android:verticalSpacing="@dimen/image_thumbnail_spacing"
         ptr:ptrDrawable="@drawable/default_ptr_rotate"
         ptr:ptrMode="both" />

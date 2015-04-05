@@ -35,21 +35,35 @@ public class ImageDetailFragment extends Fragment {
 	private ImageView mImageView;
 	private ImageFetcher mImageFetcher;
 
-	// Factory method to generate a new instance of the fragment given an image
-	// number.
+	/**
+	 * Factory method to generate a new instance of the fragment given an image
+	 * number.
+	 * 
+	 * @param imageUrl
+	 *            The image url to load
+	 * @return A new instance of ImageDetailFragment with imageNum extras
+	 */
 	public static ImageDetailFragment newInstance(String imageUrl) {
 		final ImageDetailFragment f = new ImageDetailFragment();
+
 		final Bundle args = new Bundle();
 		args.putString(IMAGE_DATA_EXTRA, imageUrl);
 		f.setArguments(args);
+
 		return f;
 	}
 
-	// Empty constructor as per the Fragment documentation
+	/**
+	 * Empty constructor as per the Fragment documentation
+	 */
 	public ImageDetailFragment() {
 	}
 
-	// Populate image using a url from extras.
+	/**
+	 * Populate image using a url from extras, use the convenience factory
+	 * method {@link ImageDetailFragment#newInstance(String)} to create this
+	 * fragment.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,6 +84,7 @@ public class ImageDetailFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
 		// Use the parent activity to load the image asynchronously into the
 		// ImageView (so a single
 		// cache can be used over all pages in the ViewPager

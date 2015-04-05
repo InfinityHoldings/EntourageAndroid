@@ -27,7 +27,7 @@ public class HttpClientJSONPOST {
 	JSONObject jsonObj;
 	String json = "", result = "", url = "";
 	private static InputStream is = null;
-	private static final int HTTP_TIMEOUT = 30 * 10000;
+	private static final int HTTP_TIMEOUT = 90 * 10000;
 	private static final int REGISTRATION_TIMEOUT = 3 * 1000;
 
 	// Single instance of our DefaultHttpClient

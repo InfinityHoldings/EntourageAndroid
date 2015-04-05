@@ -17,14 +17,14 @@
 
 <resources>
 
-    <dimen name="image_thumbnail_size">100dp</dimen>
-    <dimen name="image_thumbnail_spacing">1dp</dimen>
+    <dimen name="image_thumbnail_size">100sp</dimen>
+    <dimen name="image_thumbnail_spacing">2sp</dimen>
     
     <!-- Widgets -->
-    <dimen name="indicator_right_padding">10dp</dimen>
-    <dimen name="indicator_corner_radius">12dp</dimen>
-    <dimen name="indicator_internal_padding">4dp</dimen>
-    <dimen name="header_footer_left_right_padding">24dp</dimen>
-    <dimen name="header_footer_top_bottom_padding">12dp</dimen>
+    <dimen name="indicator_right_padding">10sp</dimen>
+    <dimen name="indicator_corner_radius">12sp</dimen>
+    <dimen name="indicator_internal_padding">4sp</dimen>
+    <dimen name="header_footer_left_right_padding">24sp</dimen>
+    <dimen name="header_footer_top_bottom_padding">12sp</dimen>
 
 </resources>
