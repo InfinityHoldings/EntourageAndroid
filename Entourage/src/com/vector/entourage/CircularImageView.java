@@ -1,6 +1,5 @@
-package com.infinity.views;
-
-import com.infinity.entourage.R;
+package com.vector.entourage;
+import com.vector.entourage.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v7.internal.widget.ViewUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -64,7 +64,7 @@ public class CircularImageView extends ImageView{
 		mPaint.setAntiAlias(true); 
 		//refreshBitmapShader(); 
 		//Get the custom attributes for the view from its styleable 
-		TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CircularImageView, defStyleAttr, 0);
+		TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, com.vector.entourage.CircularImageView.EMPTY_STATE_SET, defStyleAttr, 0);
 		
 		hasShadow = attributes.getBoolean(R.styleable.CircularImageView_hasShadow, false); 
 		

@@ -3,8 +3,6 @@ package com.vector.entourage;
 import java.util.ArrayList;
 import java.util.List;
 
-import views.FeedAdapter;
-import views.FeedItem;
 
 
 import android.app.Activity;

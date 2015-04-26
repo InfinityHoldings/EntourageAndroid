@@ -137,7 +137,7 @@ public class HttpClientJSONPOST {
 		return result;
 	}
 
-	public JSONObject HttpImageMetaData(String url, S3Amazon s3)
+	public JSONObject HttpUploadMediaData(String url, S3Amazon s3)
 			throws Exception {
 		try {
 			// Create HttpClient
@@ -187,7 +187,6 @@ public class HttpClientJSONPOST {
 			jsonObj = new JSONObject(result);
 		} catch (JSONException e) {
 			Log.e("JSON Parser", "Error parsing data " + e.toString());
-			e.printStackTrace();
 		}
 		return jsonObj;
 	}

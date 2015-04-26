@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CircularImageView"> 
-        <attr name="hasBorder" format="boolean"> </attr>
-         <attr name="hasShadow" format="boolean"> </attr>
+
+    <declare-styleable name="CircularImageView">
+        <attr name="hasBorder" format="boolean"></attr>
+        <attr name="hasShadow" format="boolean"></attr>
     </declare-styleable>
-    
     <declare-styleable name="CustomCircularImageViewTheme">
         <attr name="circularImageViewStyle" format="reference" />
     </declare-styleable>
-    
+
 </resources>

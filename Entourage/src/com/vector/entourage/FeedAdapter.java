@@ -1,8 +1,8 @@
-package com.infinity.views;
+package com.vector.entourage;
 
 import java.util.List;
 
-import com.infinity.entourage.R;
+import com.vector.entourage.R;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -27,7 +27,7 @@ public class Uploader {
 
 	private static final long MIN_DEFAULT_PART_SIZE = 5 * 1024 * 1024;
 
-	private static final String TAG = "Entourage";
+	private static final String TAG = Uploader.class.getSimpleName();
 	private static final String PREFS_NAME = "entourage_prefs";
 	private static final String PREFS_UPLOAD_ID = "_uploadId";
 	private static final String PREFS_ETAGS = "_etags";

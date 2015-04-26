@@ -7,7 +7,7 @@
     android:gravity="center_vertical"
     android:orientation="vertical" >
     
-    <views.CircularImageView 
+    <com.vector.entourage.CircularImageView 
         android:id="@+id/profilePic"
         android:layout_width="170dip"
         android:layout_height="170dip"

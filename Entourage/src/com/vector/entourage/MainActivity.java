@@ -1,6 +1,5 @@
 package com.vector.entourage;
 
-import com.vector.service.UploadService;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -31,7 +30,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main_bkup);
 
 		select = (Button) findViewById(R.id.btn_select);
 		interrupt = (Button) findViewById(R.id.btn_interrupt);
@@ -55,9 +54,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Interrupt any active upload
-				Intent intent = new Intent(
-						UploadService.UPLOAD_CANCELLED_ACTION);
-				sendBroadcast(intent);
+			//	Intent intent = new Intent(
+				//		UploadService.UPLOAD_CANCELLED_ACTION);
+				//sendBroadcast(intent);
 			}
 		});
 	}
@@ -66,7 +65,7 @@ public class MainActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		IntentFilter f = new IntentFilter();
-		f.addAction(UploadService.UPLOAD_STATE_CHANGED_ACTION);
+		//f.addAction(UploadService.UPLOAD_STATE_CHANGED_ACTION);
 		registerReceiver(uploadStateReceiver, f);
 	}
 
@@ -86,8 +85,8 @@ public class MainActivity extends Activity {
 				Log.d("S3", "uri=" + uri.toString());
 				Log.d("S3", "path=" + path);
 				// initiate the upload
-				Intent intent = new Intent(this, UploadService.class);
-				intent.putExtra(UploadService.ARG_FILE_PATH, path);
+				Intent intent = new Intent(this, UploadActivity.class);
+				intent.putExtra(UploadActivity.ARG_FILE_PATH, path);
 				startService(intent);
 			}
 		}
@@ -117,10 +116,10 @@ public class MainActivity extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			Bundle b = intent.getExtras();
-			status.setText(b.getString(UploadService.MSG_EXTRA));
-			int percent = b.getInt(UploadService.PERCENT_EXTRA);
-			progress.setIndeterminate(percent < 0);
-			progress.setProgress(percent);
+		//	status.setText(b.getString(UploadService.MSG_EXTRA));
+		//	int percent = b.getInt(UploadService.PERCENT_EXTRA);
+		//	progress.setIndeterminate(percent < 0);
+		//	progress.setProgress(percent);
 		}
 	};
 }

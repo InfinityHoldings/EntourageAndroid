@@ -1,4 +1,4 @@
-package com.infinity.views;
+package com.vector.entourage;
 
 import android.graphics.Bitmap;
 

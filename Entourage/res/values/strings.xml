@@ -23,7 +23,7 @@
     <!-- SplashScreen -->
     <color name="white">#FFFFFF</color>
 
-    <string name="splashTitle">©2014 Vector Technology, LLC. All rights reserved.</string>
+    <string name="splashTitle">©2015 Vector Systems, LLC. All rights reserved.</string>
 
     <!-- User Page Strings -->
     <string name="fullname"> First Name </string>
@@ -39,6 +39,11 @@
     <string name="upload">Upload</string>
     <string name="CaptionHint">Write Caption</string>
     <string name="contentDescription">Image</string>
+    <string name="btnTakePicture">Capture Image</string>
+    <string name="btnCapture">Take Picture</string>
+    <string name="btnRecordVideo">Record Video</string>
+    <string name="or">(or)</string>
+    <string name="btnUploadToServer">Upload to Server</string>
 
     <!--
          How can we make these fields cooler? without them sounding like stats in a database? 
@@ -47,6 +52,7 @@
     	SHOULD THIS COMMENT BE EXTRACTED AND PLACED IN A DESIGN DOC?
     -->
     <string name="clear_cache_menu">Clear Caches</string>
+    <string name="action_add_image">Add Image</string>
     <string name="clear_cache_complete_toast">Caches have been cleared</string>
     <string name="imageview_description">Image Thumbnail</string>
     <string name="no_network_connection_toast">No network connection found</string>

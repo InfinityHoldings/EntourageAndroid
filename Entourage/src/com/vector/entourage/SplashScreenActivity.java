@@ -45,7 +45,7 @@ public class SplashScreenActivity extends Activity {
 			@Override
 			protected void onPostExecute(Void aVoid) {
 				startActivity(new Intent(SplashScreenActivity.this,
-						ImageGridActivity.class));
+						CameraActivity.class));
 			}
 		}.execute();
 	}

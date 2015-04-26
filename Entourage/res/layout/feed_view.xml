@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <views.CircularImageView
+        <com.vector.entourage.CircularImageView
             android:id="@+id/feedPic"
             android:layout_width="50dip"
             android:layout_height="50dip"

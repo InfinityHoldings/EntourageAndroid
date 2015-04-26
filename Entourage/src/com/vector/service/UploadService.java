@@ -15,9 +15,10 @@ import com.vector.amazonaws.UploadInterruptedException;
 import com.vector.amazonaws.Uploader;
 import com.vector.amazonaws.Uploader.UploadProgressListener;
 import com.vector.asynctask.HttpClientJSONPOST;
+import com.vector.entourage.Config;
 import com.vector.entourage.Constants;
-import com.vector.entourage.ImageUploadActivity;
 import com.vector.entourage.R;
+import com.vector.entourage.UploadActivity;
 import com.vector.utils.CognitoUtil;
 
 import android.app.IntentService;
@@ -36,7 +37,7 @@ import android.widget.Toast;
 
 public class UploadService extends IntentService {
 
-	public static final String ARG_FILE_PATH = "file_path";
+	public static final String ARG_FILE_PATH = "filePath";
 	public static final String UPLOAD_STATE_CHANGED_ACTION = "com.vector.entourage.UPLOAD_STATE_CHANGED_ACTION";
 	public static final String UPLOAD_CANCELLED_ACTION = "com.vector.entourage.UPLOAD_CANCELLED_ACTION";
 	public static final String S3KEY_EXTRA = "s3key";
@@ -115,7 +116,7 @@ public class UploadService extends IntentService {
 				broadcastState(s3ObjectKey, -1,
 						"File successfully uploaded to " + s3Location);
 			}
-			new HttpImageLoadTask().execute();
+			new HttpMediaUploadTask().execute();
 		} catch (UploadInterruptedException uie) {
 			broadcastState(s3ObjectKey, -1, "User interrupted");
 		} catch (Exception e) {
@@ -164,7 +165,7 @@ public class UploadService extends IntentService {
 		builder.setOngoing(true);
 		builder.setProgress(100, progress, false);
 
-		Intent notificationIntent = new Intent(this, ImageUploadActivity.class);
+		Intent notificationIntent = new Intent(this, UploadActivity.class);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				notificationIntent, 0);
@@ -193,7 +194,8 @@ public class UploadService extends IntentService {
 		}
 	}
 
-	private class HttpImageLoadTask extends AsyncTask<String, Void, JSONObject> {
+	private class HttpMediaUploadTask extends
+			AsyncTask<String, Void, JSONObject> {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -208,8 +210,7 @@ public class UploadService extends IntentService {
 			s3.setBucket(Constants.BUCKET_NAME);
 			s3.setLocation(s3.getUid() + "/" + s3.getPath());
 			try {
-				jobj = post.HttpImageMetaData(
-						"http://10.0.0.10:9000/rest/loadImageMetaData", s3);
+				jobj = post.HttpUploadMediaData(Config.FILE_UPLOAD_URL, s3);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -225,7 +226,7 @@ public class UploadService extends IntentService {
 				String success = jobj.getJSONObject("Load").getString("status");
 				Log.d("Login response", success);
 
-				if (success.equalsIgnoreCase("Image Loaded")) {
+				if (success.equalsIgnoreCase("Media Loaded")) {
 					Toast.makeText(UploadService.this, "load Success",
 							Toast.LENGTH_SHORT).show();
 				} else

@@ -78,7 +78,7 @@ public class ImageGridFragment extends Fragment implements
 	private boolean error = false;
 	GridView mGridView;
 	View v;
-	String url = "http://192.168.1.11:9000/rest/downloadImages";
+	String url = "http://10.0.0.10:9000/rest/downloadImages";
 
 	public ImageGridFragment() {
 	}
@@ -247,7 +247,7 @@ public class ImageGridFragment extends Fragment implements
 				mGridView = (GridView) v.findViewById(R.id.pull_refresh_grid);
 			} else {
 				for (int i = 0; i < imageArr.length(); i++) {
-					// get the image information JSON Array
+					// get the image information from JSON Array
 					String imageInfo = imageArr.get(i).toString();
 					// create java object from the JSON object
 					S3Amazon amazon = gson.fromJson(imageInfo, S3Amazon.class);
@@ -303,7 +303,7 @@ public class ImageGridFragment extends Fragment implements
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.main_menu, menu);
+		inflater.inflate(R.menu.main_activity_bar, menu);
 	}
 
 	@Override
@@ -314,6 +314,9 @@ public class ImageGridFragment extends Fragment implements
 			Toast.makeText(getActivity(), R.string.clear_cache_complete_toast,
 					Toast.LENGTH_SHORT).show();
 			return true;
+		case R.id.action_add_image:
+			 Intent intent = new Intent(getActivity(), MediaUploadActivity.class);
+             startActivity(intent);
 		}
 		return super.onOptionsItemSelected(item);
 	}
